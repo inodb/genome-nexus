@@ -1,0 +1,15 @@
+language: java
+jdk: oraclejdk7
+env:
+- MAVEN_VERSION=3.3.9
+install:
+    # install maven
+- |
+    mkdir -p ~/maven && \
+    test -d ~/maven/$MAVEN_VERSION/bin || { \
+        find ~/maven -mindepth 1 -delete && \
+        mkdir -p ~/maven/$MAVEN_VERSION && \
+        wget -O - http://www.eu.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | \
+            tar -C ~/maven/$MAVEN_VERSION --strip-components=1 -xzf -; }
+script:
+- mvn clean install
