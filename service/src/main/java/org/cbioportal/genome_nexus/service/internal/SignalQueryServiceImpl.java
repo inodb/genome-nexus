@@ -2,12 +2,12 @@ package org.cbioportal.genome_nexus.service.internal;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.cbioportal.genome_nexus.component.search.SignalIndexBuilder;
 import org.cbioportal.genome_nexus.component.search.SignalSearchEngine;
 import org.cbioportal.genome_nexus.model.*;
 import org.cbioportal.genome_nexus.persistence.SignalMutationRepository;
 import org.cbioportal.genome_nexus.persistence.VariantAnnotationRepository;
 import org.cbioportal.genome_nexus.service.SignalQueryService;
+import org.cbioportal.genome_nexus.service.annotation.SignalIndexBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

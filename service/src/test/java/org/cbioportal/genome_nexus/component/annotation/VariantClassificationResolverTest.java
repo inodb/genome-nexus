@@ -1,6 +1,7 @@
 package org.cbioportal.genome_nexus.component.annotation;
 
 import org.cbioportal.genome_nexus.model.VariantAnnotation;
+import org.cbioportal.genome_nexus.service.annotation.VariantClassificationResolver;
 import org.cbioportal.genome_nexus.service.mock.CanonicalTranscriptResolverMocker;
 import org.cbioportal.genome_nexus.service.mock.VariantAnnotationMockData;
 import org.cbioportal.genome_nexus.service.mock.VariantTypeResolverMocker;

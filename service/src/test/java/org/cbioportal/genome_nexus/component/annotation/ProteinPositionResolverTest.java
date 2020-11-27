@@ -3,6 +3,8 @@ package org.cbioportal.genome_nexus.component.annotation;
 import org.cbioportal.genome_nexus.model.IntegerRange;
 import org.cbioportal.genome_nexus.model.TranscriptConsequence;
 import org.cbioportal.genome_nexus.model.VariantAnnotation;
+import org.cbioportal.genome_nexus.service.annotation.ProteinChangeResolver;
+import org.cbioportal.genome_nexus.service.annotation.ProteinPositionResolver;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

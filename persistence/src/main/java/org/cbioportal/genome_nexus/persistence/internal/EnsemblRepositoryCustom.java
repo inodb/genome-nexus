@@ -43,4 +43,5 @@ public interface EnsemblRepositoryCustom
     String findEntrezGeneIdByHugoSymbol(String hugoSymbol);
     List<String> findEntrezGeneIdByHugoSymbol(String hugoSymbol, Boolean searchInAliases);
     String findHugoSymbolByEntrezGeneId(String entrezGeneId);
+    Set<String> getCanonicalTranscriptIds(List<String> TranscriptIds, String isoformOverrideSource);
 }

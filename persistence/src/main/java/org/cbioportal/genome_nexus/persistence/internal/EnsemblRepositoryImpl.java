@@ -9,6 +9,8 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -108,6 +110,18 @@ public class EnsemblRepositoryImpl implements EnsemblRepositoryCustom
             }
         }
         return null;
+    }
+
+    public Set<String> getCanonicalTranscriptIds(List<String> transcriptIds, String isoformOverrideSource) {
+        Query query = new Query();
+
+        Criteria criteria = Criteria.where(isoformOverrideSource + "_canonical_transcript").in(transcriptIds);;
+
+        query.addCriteria(criteria);
+        List<EnsemblCanonical> ensemblCanonical = mongoTemplate.find(query,
+            EnsemblCanonical.class, CANONICAL_TRANSCRIPTS_COLLECTION
+        );
+        return ensemblCanonical.stream().map((x) -> x.getCanonicalTranscriptId(isoformOverrideSource)).collect(Collectors.toSet());
     }
 
     private void initHugoSymbolToEntrezGeneIdMap() {

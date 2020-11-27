@@ -2,6 +2,8 @@ package org.cbioportal.genome_nexus.component.search;
 
 import org.cbioportal.genome_nexus.component.annotation.*;
 import org.cbioportal.genome_nexus.model.*;
+import org.cbioportal.genome_nexus.service.annotation.ProteinChangeResolver;
+import org.cbioportal.genome_nexus.service.annotation.SignalIndexBuilder;
 import org.cbioportal.genome_nexus.service.mock.SignalMockData;
 import org.cbioportal.genome_nexus.service.mock.VariantAnnotationMockData;
 import org.junit.Before;

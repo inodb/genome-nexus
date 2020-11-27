@@ -1,7 +1,7 @@
 package org.cbioportal.genome_nexus.service.annotation;
 
 import java.util.*;
-import org.cbioportal.genome_nexus.component.annotation.CanonicalTranscriptResolver;
+import org.cbioportal.genome_nexus.service.annotation.CanonicalTranscriptResolver;
 import org.cbioportal.genome_nexus.model.EnsemblGene;
 import org.cbioportal.genome_nexus.model.TranscriptConsequence;
 import org.cbioportal.genome_nexus.model.VariantAnnotation;
@@ -56,8 +56,8 @@ public class EntrezGeneIdResolver
     }
 
     @Nullable
-    public String resolve(VariantAnnotation variantAnnotation) throws EnsemblWebServiceException
+    public String resolve(VariantAnnotation variantAnnotation, String isoformOverrideSource) throws EnsemblWebServiceException
     {
-        return this.resolve(this.canonicalTranscriptResolver.resolve(variantAnnotation));
+        return this.resolve(this.canonicalTranscriptResolver.resolve(variantAnnotation, isoformOverrideSource));
     }
 }

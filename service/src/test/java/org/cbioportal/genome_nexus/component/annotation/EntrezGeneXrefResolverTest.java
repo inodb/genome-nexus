@@ -3,6 +3,7 @@ package org.cbioportal.genome_nexus.component.annotation;
 import org.cbioportal.genome_nexus.model.GeneXref;
 import org.cbioportal.genome_nexus.model.VariantAnnotation;
 import org.cbioportal.genome_nexus.service.GeneXrefService;
+import org.cbioportal.genome_nexus.service.annotation.CanonicalTranscriptResolver;
 import org.cbioportal.genome_nexus.service.exception.EnsemblWebServiceException;
 import org.cbioportal.genome_nexus.service.mock.CanonicalTranscriptResolverMocker;
 import org.cbioportal.genome_nexus.service.mock.GeneXrefMockData;
@@ -153,9 +154,9 @@ public class EntrezGeneXrefResolverTest
     {
         return this.entrezGeneXrefResolver.resolve(
             this.geneXrefService.getGeneXrefs(
-                this.canonicalTranscriptResolver.resolve(variantMockData.get(variantId)).getGeneId()
+                this.canonicalTranscriptResolver.resolve(variantMockData.get(variantId), "uniprot").getGeneId()
             ),
-            this.canonicalTranscriptResolver.resolve(variantMockData.get(variantId)).getGeneSymbol()
+            this.canonicalTranscriptResolver.resolve(variantMockData.get(variantId), "uniprot").getGeneSymbol()
         );
     }
 }

@@ -40,7 +40,7 @@ public class AnnotationIntegrationTest
 
     private Map<String, Object> fetchVariantAnnotationGET(String variant)
     {
-        String response = this.restTemplate.getForObject(BASE_URL + variant, String.class);
+        String response = this.restTemplate.getForObject(BASE_URL + variant + "?" + ALL_ENSEMBL_FIELDS, String.class);
         JsonParser springParser = JsonParserFactory.getJsonParser();
         return springParser.parseMap(response);
     }
@@ -108,6 +108,19 @@ public class AnnotationIntegrationTest
 
         Boolean invalidAnnotatedFlag = ((Boolean) this.fetchVariantAnnotationPOST(variants).get(2).get("successfully_annotated"));
         assertEquals(invalidAnnotatedFlag, false);
+    }
+
+    @Test
+    public void testAnnotationCDKN2A() {
+        // 9:g.21994291C>T should be most severe missense mutation for non-canonical transcript of CDKN2A
+        String[] variants = {
+            "9:g.21994291C>T",
+        }; 
+
+        Map<String, Object> annotationResponse = this.fetchVariantAnnotationGET(variants[0]);
+        String mostSevereConsequence = annotationResponse.get("most_severe_consequence").toString();
+        // most severe consequence for this CDKN2A variant hould be missense_variant
+        assertEquals("missense_variant", mostSevereConsequence);
     }
 
     @Test

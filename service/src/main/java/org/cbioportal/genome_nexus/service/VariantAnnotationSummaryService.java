@@ -18,12 +18,12 @@ public interface VariantAnnotationSummaryService
     /**
      * Generate annotation summary for the canonical transcript of the given variant annotation.
      */
-    VariantAnnotationSummary getAnnotationSummaryForCanonical(VariantAnnotation annotation);
+    VariantAnnotationSummary getAnnotationSummaryForCanonical(VariantAnnotation annotation, String isoformOverrideSource);
 
     /**
      * Generate annotation summary for all transcripts of the given variant annotation.
      */
-    VariantAnnotationSummary getAnnotationSummary(VariantAnnotation annotation);
+    VariantAnnotationSummary getAnnotationSummary(VariantAnnotation annotation, String isoformOverrideSource);
 
     /**
      * Generate annotation summary for all transcripts of the given variant string.

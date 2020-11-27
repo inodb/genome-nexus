@@ -3,11 +3,22 @@ package org.cbioportal.genome_nexus.service.internal;
 import org.cbioportal.genome_nexus.component.annotation.*;
 import org.cbioportal.genome_nexus.model.TranscriptConsequenceSummary;
 import org.cbioportal.genome_nexus.model.VariantAnnotationSummary;
+import org.cbioportal.genome_nexus.persistence.EnsemblRepository;
 import org.cbioportal.genome_nexus.model.TranscriptConsequence;
 import org.cbioportal.genome_nexus.model.VariantAnnotation;
 import org.cbioportal.genome_nexus.service.VariantAnnotationService;
 import org.cbioportal.genome_nexus.service.VariantAnnotationSummaryService;
+import org.cbioportal.genome_nexus.service.annotation.AminoAcidsResolver;
+import org.cbioportal.genome_nexus.service.annotation.CanonicalTranscriptResolver;
+import org.cbioportal.genome_nexus.service.annotation.CodonChangeResolver;
+import org.cbioportal.genome_nexus.service.annotation.ConsequenceTermsResolver;
 import org.cbioportal.genome_nexus.service.annotation.EntrezGeneIdResolver;
+import org.cbioportal.genome_nexus.service.annotation.HugoGeneSymbolResolver;
+import org.cbioportal.genome_nexus.service.annotation.ProteinChangeResolver;
+import org.cbioportal.genome_nexus.service.annotation.ProteinPositionResolver;
+import org.cbioportal.genome_nexus.service.annotation.RefSeqResolver;
+import org.cbioportal.genome_nexus.service.annotation.TranscriptIdResolver;
+import org.cbioportal.genome_nexus.service.annotation.VariantClassificationResolver;
 import org.cbioportal.genome_nexus.service.exception.EnsemblWebServiceException;
 import org.cbioportal.genome_nexus.service.exception.VariantAnnotationNotFoundException;
 import org.cbioportal.genome_nexus.service.exception.VariantAnnotationWebServiceException;
@@ -79,14 +90,14 @@ public class VariantAnnotationSummaryServiceImpl implements VariantAnnotationSum
         throws VariantAnnotationWebServiceException, VariantAnnotationNotFoundException
     {
         return this.getAnnotationSummaryForCanonical(
-            this.variantAnnotationService.getAnnotation(variant, isoformOverrideSource, null, null));
+            this.variantAnnotationService.getAnnotation(variant, isoformOverrideSource, null, null), isoformOverrideSource);
     }
 
     @Override
-    public VariantAnnotationSummary getAnnotationSummaryForCanonical(VariantAnnotation annotation)
+    public VariantAnnotationSummary getAnnotationSummaryForCanonical(VariantAnnotation annotation, String isoformOverrideSource)
     {
         VariantAnnotationSummary annotationSummary = this.getVariantAnnotationSummary(annotation);
-        TranscriptConsequence canonicalTranscript = this.canonicalTranscriptResolver.resolve(annotation);
+        TranscriptConsequence canonicalTranscript = this.canonicalTranscriptResolver.resolve(annotation, isoformOverrideSource);
 
         if (annotationSummary != null && canonicalTranscript != null)
         {
@@ -108,7 +119,7 @@ public class VariantAnnotationSummaryServiceImpl implements VariantAnnotationSum
         throws VariantAnnotationWebServiceException, VariantAnnotationNotFoundException
     {
         return this.getAnnotationSummary(
-            this.variantAnnotationService.getAnnotation(variant, isoformOverrideSource, null, null));
+            this.variantAnnotationService.getAnnotation(variant, isoformOverrideSource, null, null), isoformOverrideSource);
     }
 
     @Override
@@ -119,7 +130,7 @@ public class VariantAnnotationSummaryServiceImpl implements VariantAnnotationSum
             this.variantAnnotationService.getAnnotations(variants, isoformOverrideSource, null, null);
 
         for (VariantAnnotation annotation: annotations) {
-            summaries.add(this.getAnnotationSummary(annotation));
+            summaries.add(this.getAnnotationSummary(annotation, isoformOverrideSource));
         }
 
         return summaries;
@@ -133,16 +144,16 @@ public class VariantAnnotationSummaryServiceImpl implements VariantAnnotationSum
             this.variantAnnotationService.getAnnotations(variants, isoformOverrideSource, null, null);
 
         for (VariantAnnotation annotation: annotations) {
-            summaries.add(this.getAnnotationSummaryForCanonical(annotation));
+            summaries.add(this.getAnnotationSummaryForCanonical(annotation, isoformOverrideSource));
         }
 
         return summaries;
     }
 
     @Override
-    public VariantAnnotationSummary getAnnotationSummary(VariantAnnotation annotation)
+    public VariantAnnotationSummary getAnnotationSummary(VariantAnnotation annotation, String isoformOverrideSource)
     {
-        VariantAnnotationSummary annotationSummary = this.getAnnotationSummaryForCanonical(annotation);
+        VariantAnnotationSummary annotationSummary = this.getAnnotationSummaryForCanonical(annotation, isoformOverrideSource);
 
         if (annotationSummary != null)
         {
